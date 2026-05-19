@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Trampas Mentales - Frank Woodhead Aravena</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mauve: {
+                            50: '#FBF7FC',
+                            100: '#F5EBF7',
+                            200: '#EBD6F0',
+                            300: '#DCBCE3',
+                            400: '#C796D1',
+                            500: '#AA6FB5',
+                            600: '#8E5099',
+                            700: '#713D7C',
+                            800: '#552C5E',
+                            900: '#3E1D45',
+                        },
+                        sage: {
+                            50: '#F4F7F4',
+                            100: '#E6ECE6',
+                            200: '#CCD8CC',
+                            300: '#A9BFA9',
+                            400: '#82A082',
+                            500: '#618061',
+                            600: '#4B644B',
+                            700: '#3A4E3A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF6F5; /* Tono lino cálido de fondo */
+            background-image: radial-gradient(#eadaeb 0.8px, transparent 0.8px), radial-gradient(#eadaeb 0.8px, #faf6f5 0.8px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Animaciones Orgánicas de Plantas con el Viento */
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg) skewX(0deg); }
+            50% { transform: rotate(2deg) skewX(1deg); }
+        }
+        .animate-sway {
+            animation: sway 7s ease-in-out infinite;
+            transform-origin: top left;
+        }
+
+        @keyframes sway-slow {
+            0%, 100% { transform: rotate(0deg) skewX(0deg); }
+            50% { transform: rotate(-1.5deg) skewX(-1deg); }
+        }
+        .animate-sway-slow {
+            animation: sway-slow 9s ease-in-out infinite;
+            transform-origin: top right;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        .shake-animation {
+            animation: shake 0.3s ease-in-out;
+        }
+        
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        .pop-animation {
+            animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Efecto de Diario/Papel de consulta */
+        .journal-border {
+            position: relative;
+            border: 1px solid #e1d3e3;
+            box-shadow: 0 12px 40px -15px rgba(113, 61, 124, 0.08), 
+                        0 2px 4px rgba(0,0,0,0.01),
+                        inset 0 0 40px rgba(250, 246, 245, 0.6);
+        }
+
+        /* Estilos para impresión y exportación a Canva */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 6mm;
+            }
+            body {
+                background-color: #ffffff !important;
+                background-image: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-layout {
+                box-shadow: none !important;
+                border: 2px solid #e1d3e3 !important;
+                padding: 12px !important;
+                max-width: 100% !important;
+                background: white !important;
+            }
+            .journal-border::before {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden py-4 md:py-8 px-3 md:px-6 flex flex-col items-center justify-start pb-16">
+
+    <!-- DECORACIÓN BOTÁNICA SVG: POTUS Y LAVANDAS (Artesanales y súper detalladas) -->
+    
+    <!-- Esquina Superior Izquierda: Potus colgante y ramas de Lavanda -->
+    <div class="absolute top-0 left-0 w-52 md:w-72 h-auto pointer-events-none z-0 no-print opacity-90 animate-sway">
+        <svg viewBox="0 0 280 380" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+            <!-- Tallos del Potus (Guías verdes) -->
+            <path d="M0,0 C40,40 20,130 70,180 C110,220 100,280 130,340" stroke="#4B644B" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M0,20 C30,70 50,110 40,160 C30,210 70,250 85,290" stroke="#618061" stroke-width="1.5" stroke-dasharray="3 3"/>
+            
+            <!-- Hojas de Potus (Corazón verde con variaciones verde claro y crema) -->
+            <!-- Hoja 1 -->
+            <path d="M45,70 C60,55 75,70 70,95 C65,115 45,125 35,110 C25,95 35,80 45,70 Z" fill="#618061"/>
+            <path d="M45,70 C55,65 65,75 60,90 Z" fill="#82A082" opacity="0.6"/> <!-- Variación crema -->
+            <!-- Hoja 2 -->
+            <path d="M25,145 C40,135 55,145 50,165 C45,185 25,195 20,180 C15,165 20,150 25,145 Z" fill="#4B644B"/>
+            <path d="M25,145 C32,140 42,148 40,160 Z" fill="#CCD8CC" opacity="0.5"/>
+            <!-- Hoja 3 -->
+            <path d="M68,195 C88,185 95,205 90,225 C85,245 65,255 58,240 C50,225 58,205 68,195 Z" fill="#618061"/>
+            <path d="M68,195 C78,190 88,198 83,215 Z" fill="#82A082" opacity="0.5"/>
+            <!-- Hoja 4 -->
+            <path d="M92,265 C112,255 120,275 115,295 C110,315 90,325 82,310 C75,295 82,275 92,265 Z" fill="#4B644B"/>
+
+            <!-- Tallos de Lavanda (Estructuras más finas con espigas púrpuras) -->
+            <path d="M0,50 Q60,110 50,220" stroke="#3A4E3A" stroke-width="1.5"/>
+            <!-- Espiga de Lavanda Izquierda (Buds de flores) -->
+            <g fill="#AA6FB5">
+                <circle cx="50" cy="180" r="5"/> <circle cx="56" cy="182" r="4"/> <circle cx="44" cy="181" r="4"/>
+                <circle cx="51" cy="192" r="5" fill="#8E5099"/> <circle cx="57" cy="194" r="4" fill="#8E5099"/> <circle cx="45" cy="191" r="4" fill="#8E5099"/>
+                <circle cx="49" cy="204" r="5" fill="#713D7C"/> <circle cx="54" cy="206" r="4" fill="#713D7C"/> <circle cx="43" cy="202" r="4" fill="#713D7C"/>
+                <circle cx="48" cy="215" r="3" fill="#552C5E"/>
+            </g>
+
+            <path d="M0,80 Q90,140 100,280" stroke="#3A4E3A" stroke-width="1.5"/>
+            <!-- Espiga de Lavanda Derecha -->
+            <g fill="#AA6FB5">
+                <circle cx="100" cy="230" r="5"/> <circle cx="106" cy="232" r="4"/> <circle cx="94" cy="231" r="4"/>
+                <circle cx="101" cy="242" r="5" fill="#8E5099"/> <circle cx="107" cy="244" r="4" fill="#8E5099"/> <circle cx="95" cy="241" r="4" fill="#8E5099"/>
+                <circle cx="99" cy="254" r="5" fill="#713D7C"/> <circle cx="104" cy="256" r="4" fill="#713D7C"/> <circle cx="93" cy="252" r="4" fill="#713D7C"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Esquina Superior Derecha: Cascala de Potus y Lavanda aromática -->
+    <div class="absolute top-0 right-0 w-52 md:w-72 h-auto pointer-events-none z-0 no-print opacity-90 animate-sway-slow">
+        <svg viewBox="0 0 280 380" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+            <!-- Tallos del Potus colgante -->
+            <path d="M280,0 C240,40 260,130 210,180 C170,220 180,280 150,340" stroke="#4B644B" stroke-width="2.5" stroke-linecap="round"/>
+            
+            <!-- Hojas de Potus -->
+            <!-- Hoja 1 -->
+            <path d="M235,70 C220,55 205,70 210,95 C215,115 235,125 245,110 C255,95 245,80 235,70 Z" fill="#618061"/>
+            <path d="M235,70 C225,65 215,75 220,90 Z" fill="#CCD8CC" opacity="0.6"/>
+            <!-- Hoja 2 -->
+            <path d="M255,145 C240,135 225,145 230,165 C235,185 255,195 260,180 C265,165 260,150 255,145 Z" fill="#4B644B"/>
+            <!-- Hoja 3 -->
+            <path d="M212,195 C192,185 185,205 190,225 C195,245 215,255 222,240 C230,225 222,205 212,195 Z" fill="#618061"/>
+            <path d="M212,195 C202,190 192,198 197,215 Z" fill="#82A082" opacity="0.5"/>
+            <!-- Hoja 4 -->
+            <path d="M188,265 C168,255 160,275 165,295 C170,315 190,325 198,310 C205,295 198,275 188,265 Z" fill="#4B644B"/>
+
+            <!-- Tallos de Lavanda -->
+            <path d="M280,50 Q220,110 230,220" stroke="#3A4E3A" stroke-width="1.5"/>
+            <g fill="#AA6FB5">
+                <circle cx="230" cy="180" r="5"/> <circle cx="236" cy="182" r="4"/> <circle cx="224" cy="181" r="4"/>
+                <circle cx="231" cy="192" r="5" fill="#8E5099"/> <circle cx="237" cy="194" r="4" fill="#8E5099"/> <circle cx="225" cy="191" r="4" fill="#8E5099"/>
+                <circle cx="229" cy="204" r="5" fill="#713D7C"/> <circle cx="234" cy="206" r="4" fill="#713D7C"/> <circle cx="223" cy="202" r="4" fill="#713D7C"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- BARRA DE CONTROL DEL TERAPEUTA (No imprimible) -->
+    <div class="no-print w-full max-w-5xl bg-stone-950/95 backdrop-blur text-stone-100 rounded-2xl p-4 mb-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 border border-stone-800/80 z-20">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl animate-pulse">🌿</span>
+            <div>
+                <h4 class="font-bold text-sm tracking-wide text-sage-100">Desafío TCC Botánico de Frank</h4>
+                <p class="text-[11px] text-stone-400">Herramienta psicoterapéutica con sonidos e ilustraciones vivas</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-2 items-center">
+            <!-- Botón de Música de Ambiente Chill -->
+            <button id="btnPlayAmbient" onclick="toggleAmbientMusic()" class="px-3.5 py-1.5 bg-sage-700 hover:bg-sage-600 text-white rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-sage-600 shadow-md">
+                <span id="ambientIcon">🎵</span> <span id="ambientText">Activar Sonido Chill</span>
+            </button>
+            
+            <!-- Botón Sonidos de la Trivia -->
+            <button id="btnPlaySound" onclick="toggleSound()" class="px-3.5 py-1.5 bg-stone-900 hover:bg-stone-850 text-stone-300 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-stone-800">
+                <span id="soundIcon">🔊</span> <span id="soundText">Efectos: Sí</span>
+            </button>
+            
+            <!-- Guardar -->
+            <button onclick="window.print()" class="px-4 py-1.5 bg-mauve-700 hover:bg-mauve-600 text-white rounded-xl text-xs font-semibold transition-all shadow-md flex items-center gap-1.5 border border-mauve-600/30">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                Guardar en PDF para Canva
+            </button>
+        </div>
+    </div>
+
+    <!-- CUADERNO DE CONSULTA PRINCIPAL (Imprimible) -->
+    <div id="printSheet" class="journal-border print-layout w-full max-w-5xl bg-white rounded-[2.5rem] p-6 md:p-10 flex flex-col justify-between z-10 overflow-hidden relative" style="min-height: 19.5cm;">
+        
+        <!-- Lavandas y Potus de fondo del diario para impresión sutil -->
+        <div class="absolute bottom-0 left-0 w-32 h-32 pointer-events-none opacity-10 z-0">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <!-- Dibujo minimalista de Lavanda para fondo -->
+                <path d="M20,100 Q40,50 30,0" stroke="#4B644B" stroke-width="1.5"/>
+                <circle cx="30" cy="20" r="4" fill="#AA6FB5"/>
+                <circle cx="34" cy="28" r="4" fill="#8E5099"/>
+                <circle cx="26" cy="36" r="4" fill="#713D7C"/>
+            </svg>
+        </div>
+        <div class="absolute bottom-0 right-0 w-32 h-32 pointer-events-none opacity-10 z-0">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <!-- Dibujo minimalista de Potus para fondo -->
+                <path d="M100,100 Q50,70 0,60" stroke="#4B644B" stroke-width="1.5"/>
+                <path d="M50,70 C40,55 20,60 30,80 Z" fill="#618061"/>
+                <path d="M20,60 C10,45 -10,50 0,70 Z" fill="#4B644B"/>
+            </svg>
+        </div>
+
+        <!-- ENCABEZADO ESTILO DIARIO BOTÁNICO -->
+        <div class="border-b-2 border-dashed border-mauve-100 pb-5 mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative z-10">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="text-stone-400 text-xs tracking-widest uppercase">Cuaderno de Exploración</span>
+                    <span class="text-mauve-300">•</span>
+                    <span class="text-sage-500 text-xs font-semibold">Terapia de Reencuadre</span>
+                </div>
+                <h1 class="serif-title text-2xl md:text-3.5xl font-bold text-mauve-900 tracking-tight leading-none">El Detector de Trampas Mentales</h1>
+                <!-- Separador botánico sutil -->
+                <div class="flex items-center gap-1.5 mt-2">
+                    <div class="h-0.5 w-12 bg-mauve-200"></div>
+                    <span class="text-mauve-400 text-xs">💜</span>
+                    <div class="h-0.5 w-12 bg-mauve-200"></div>
+                </div>
+            </div>
+            <div class="flex flex-col items-start sm:items-end">
+                <span class="text-[10px] font-bold text-sage-700 bg-sage-100/75 border border-sage-200/50 px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">Entrenamiento de Auto-Observación</span>
+                <span class="text-[10px] text-stone-400 font-medium mt-1.5">Frank Woodhead Aravena &bull; Psicólogo Clínico</span>
+            </div>
+        </div>
+
+        <!-- JUEGO 1: TRIVIA DE PENSAMIENTOS OCULTOS -->
+        <div id="trivia-section" class="flex-grow flex flex-col justify-between relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Columna Escenario Diario -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-gradient-to-br from-mauve-50/70 to-sage-50/50 border border-mauve-100/60 rounded-[1.8rem] p-6 md:p-8 relative shadow-inner overflow-hidden">
+                        <!-- Pequeña hoja de fondo decorativa -->
+                        <div class="absolute right-3 bottom-3 text-stone-200/30 text-8xl pointer-events-none select-none serif-title font-light">🍂</div>
+                        
+                        <div class="flex items-center justify-between mb-4 relative z-10">
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-mauve-700/80 bg-white/80 border border-mauve-100 px-3 py-1 rounded-full">Dilema de la Vida Diaria</span>
+                            <span id="question-counter" class="text-xs font-semibold text-stone-400">Pregunta 1 de 6</span>
+                        </div>
+                        
+                        <!-- Texto del escenario (Ahora en estilo regular súper legible) -->
+                        <h2 id="scenario-text" class="serif-title text-base md:text-xl font-bold text-stone-800 leading-relaxed relative z-10">
+                            "Hoy domingo decidí quedarme acostado todo el día descansando. Siento un nudo de culpa en el estómago y una voz que me repite: 'Deberías estar ordenando o haciendo algo productivo, eres un flojo'."
+                        </h2>
+                    </div>
+
+                    <!-- Progreso con estilo de hoja que avanza -->
+                    <div class="no-print space-y-1">
+                        <div class="flex justify-between text-[10px] text-stone-400 font-medium uppercase tracking-wider">
+                            <span>Avance del Ejercicio</span>
+                            <span id="progress-percent">16%</span>
+                        </div>
+                        <div class="w-full bg-stone-100 h-2 rounded-full overflow-hidden border border-stone-200/30">
+                            <div id="progress-bar" class="bg-gradient-to-r from-mauve-400 to-mauve-600 h-full transition-all duration-500 rounded-full" style="width: 16.6%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Alternativas -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sage-500 text-sm">🔮</span>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500">¿Qué distorsión se esconde aquí? (Pasa el mouse para ver su significado)</h3>
+                    </div>
+                    <div id="options-container" class="space-y-3">
+                        <!-- Opciones generadas por JS con FLORES VARIADAS -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RETROALIMENTACIÓN ESTILO NOTA TERAPÉUTICA -->
+            <div id="feedback-container" class="hidden mt-6 p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden">
+                <!-- Hoja de fondo decorativa de acierto/error -->
+                <div id="feedback-bg-leaf" class="absolute -right-6 -bottom-6 text-7xl opacity-10 pointer-events-none select-none">🌿</div>
+                <div class="flex items-start gap-4">
+                    <div id="feedback-badge" class="p-2.5 rounded-xl text-lg shadow-sm"></div>
+                    <div>
+                        <h4 id="feedback-title" class="text-xs font-bold uppercase tracking-wider"></h4>
+                        <p id="feedback-desc" class="text-xs text-stone-600 mt-1 leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NAVEGACIÓN -->
+            <div class="no-print mt-8 pt-5 border-t border-dashed border-stone-200 flex justify-between items-center">
+                <button id="btn-prev" onclick="changeQuestion(-1)" class="px-4.5 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-semibold transition-all opacity-50 cursor-not-allowed flex items-center gap-1.5" disabled>
+                    &larr; Anterior
+                </button>
+                <div id="score-display" class="text-xs font-bold text-mauve-800 bg-mauve-50/50 border border-mauve-100 px-4 py-1.5 rounded-full">
+                    Aciertos: 0 / 60 Pts
+                </div>
+                <button id="btn-next" onclick="nextAction()" class="px-5 py-2.5 bg-mauve-700 hover:bg-mauve-600 text-white rounded-xl text-xs font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-1.5">
+                    Siguiente &rarr;
+                </button>
+            </div>
+        </div>
+
+        <!-- JUEGO 2: TÉRMINOS PAREADOS (ORGANIZACIÓN HANGING CARDS) -->
+        <div id="matching-section" class="hidden flex-grow flex flex-col justify-between relative z-10">
+            <div class="text-center max-w-xl mx-auto mb-6">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-sage-600 bg-sage-100 px-3.5 py-1 rounded-full">Etapa de Consolidación</span>
+                <h2 class="serif-title text-xl md:text-2xl font-bold text-mauve-950 mt-2.5">¡Empareja las Distorsiones de la Mente!</h2>
+                <p class="text-xs text-stone-500 mt-1.5">Haz clic sobre un concepto morado y luego busca el ejemplo cotidiano con el que encaje. ¡Desármalos reconociéndolos!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch mb-6">
+                <!-- Columna Conceptos -->
+                <div class="space-y-3 flex flex-col justify-center">
+                    <div class="flex items-center gap-2 justify-center mb-2">
+                        <span class="text-mauve-500 text-xs">💡</span>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-mauve-800">Conceptos Teóricos</h3>
+                    </div>
+                    <div id="concepts-grid" class="space-y-2.5">
+                        <!-- Dinámico JS -->
+                    </div>
+                </div>
+
+                <!-- Columna Ejemplos -->
+                <div class="space-y-3 flex flex-col justify-center">
+                    <div class="flex items-center gap-2 justify-center mb-2">
+                        <span class="text-sage-500 text-xs">🌿</span>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-sage-700">Situaciones de la Vida Real</h3>
+                    </div>
+                    <div id="examples-grid" class="space-y-2.5">
+                        <!-- Dinámico JS (Texto sin cursiva) -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-print flex justify-center border-t border-stone-100 pt-5">
+                <button onclick="restartAll()" class="px-6 py-3 bg-stone-900 hover:bg-stone-850 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                    🔄 Reiniciar Todo el Ejercicio
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- GLOSARIO DE BOLSILLO: TRAMPAS COGNITIVAS -->
+        <!-- ========================================== -->
+        <div class="border-t-2 border-dashed border-stone-200 pt-8 mt-10 relative z-10">
+            <div class="flex items-center gap-2.5 mb-5 justify-center sm:justify-start">
+                <span class="text-xl">🪻</span>
+                <h3 class="serif-title text-lg font-bold text-mauve-900">Glosario Clínico de Bolsillo: Trampas Mentales Comunes</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Tarjeta 1 -->
+                <div class="bg-mauve-50/40 border border-mauve-100 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-mauve-950 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <span>🔍</span> Catastrofismo
+                        </h4>
+                        <p class="text-[11px] text-stone-600 leading-relaxed mb-3">
+                            Imaginar o convencerse de que siempre ocurrirá la peor consecuencia posible en el futuro ante cualquier situación.
+                        </p>
+                    </div>
+                    <div class="bg-white/80 border border-mauve-100/50 rounded-xl p-2.5 text-[11px] text-stone-700 leading-tight">
+                        <span class="font-bold text-mauve-800 text-[10px] uppercase block mb-0.5">Ejemplo Claro:</span>
+                        Si mi pareja tarda 20 minutos en contestar un mensaje, asumo con total certeza que tuvo un accidente de tránsito fatal.
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="bg-sage-50/40 border border-sage-100 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-sage-900 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <span>🔍</span> Lectura de Mente
+                        </h4>
+                        <p class="text-[11px] text-stone-600 leading-relaxed mb-3">
+                            Asumir o creer que sabes exactamente lo que las demás personas están pensando de ti sin tener ninguna prueba real.
+                        </p>
+                    </div>
+                    <div class="bg-white/80 border border-sage-100/50 rounded-xl p-2.5 text-[11px] text-stone-700 leading-tight">
+                        <span class="font-bold text-sage-800 text-[10px] uppercase block mb-0.5">Ejemplo Claro:</span>
+                        Veo a mi colega bostezar en la oficina y de inmediato me aseguro que piensa que soy una persona aburrida y un mal compañero.
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="bg-mauve-50/40 border border-mauve-100 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-mauve-950 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <span>🔍</span> Los "Deberías" (Reglas Rígidas)
+                        </h4>
+                        <p class="text-[11px] text-stone-600 leading-relaxed mb-3">
+                            Imponerse a uno mismo o al resto normas de comportamiento y rendimiento extremadamente rígidas y poco realistas.
+                        </p>
+                    </div>
+                    <div class="bg-white/80 border border-mauve-100/50 rounded-xl p-2.5 text-[11px] text-stone-700 leading-tight">
+                        <span class="font-bold text-mauve-800 text-[10px] uppercase block mb-0.5">Ejemplo Claro:</span>
+                        No tengo derecho a descansar en todo el fin de semana. Debo estar siempre activo y ordenando, o de lo contrario soy flojo.
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div class="bg-sage-50/40 border border-sage-100 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-sage-900 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <span>🔍</span> Filtro Mental
+                        </h4>
+                        <p class="text-[11px] text-stone-600 leading-relaxed mb-3">
+                            Enfocar la atención únicamente en un detalle negativo o error cometido, ignorando por completo toda la evidencia positiva.
+                        </p>
+                    </div>
+                    <div class="bg-white/80 border border-sage-100/50 rounded-xl p-2.5 text-[11px] text-stone-700 leading-tight">
+                        <span class="font-bold text-sage-800 text-[10px] uppercase block mb-0.5">Ejemplo Claro:</span>
+                        Hice una comida deliciosa para diez invitados, pero como a uno no le gustó el postre, me convenzo de que soy un cocinero pésimo.
+                    </div>
+                </div>
+
+                <!-- Tarjeta 5 -->
+                <div class="bg-mauve-50/40 border border-mauve-100 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-mauve-950 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <span>🔍</span> Razonamiento Emocional
+                        </h4>
+                        <p class="text-[11px] text-stone-600 leading-relaxed mb-3">
+                            Asumir que si sientes una emoción negativa o angustia física, esa sensación debe reflejar obligatoriamente la realidad.
+                        </p>
+                    </div>
+                    <div class="bg-white/80 border border-mauve-100/50 rounded-xl p-2.5 text-[11px] text-stone-700 leading-tight">
+                        <span class="font-bold text-mauve-800 text-[10px] uppercase block mb-0.5">Ejemplo Claro:</span>
+                        Como hoy me desperté con una sensación pesada de angustia en el pecho, significa que algo malo va a ocurrir esta tarde.
+                    </div>
+                </div>
+
+                <!-- Tarjeta 6 -->
+                <div class="bg-sage-50/40 border border-sage-100 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-sage-900 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <span>🔍</span> Personalización
+                        </h4>
+                        <p class="text-[11px] text-stone-600 leading-relaxed mb-3">
+                            Atribuirse la culpa y la responsabilidad de los estados de ánimo, respuestas o problemas de otros que no puedes controlar.
+                        </p>
+                    </div>
+                    <div class="bg-white/80 border border-sage-100/50 rounded-xl p-2.5 text-[11px] text-stone-700 leading-tight">
+                        <span class="font-bold text-sage-800 text-[10px] uppercase block mb-0.5">Ejemplo Claro:</span>
+                        Mi jefe llegó cansado y sin saludar efusivamente a la oficina. Me paso el día asumiendo que está molesto conmigo por mi culpa.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PIE DE PÁGINA (LOGO INSTAGRAM + CONTACTO CON ENREDADERA MURAL) -->
+        <div class="border-t-2 border-dashed border-mauve-100 pt-5 mt-8 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+            <!-- Izquierda: Datos Profesionales -->
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-sage-50 text-sage-600 rounded-xl border border-sage-100 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <div class="text-[11px] text-stone-500 font-medium">
+                    Frank Woodhead Aravena &bull; <span class="text-sage-600 font-semibold">Psicólogo Clínico TCC</span>
+                </div>
+            </div>
+
+            <!-- Centro: Eslogan de la Marca -->
+            <div class="text-[11px] font-bold text-mauve-800 italic tracking-wide text-center">
+                "Desarmando trampas, cultivando bienestar."
+            </div>
+
+            <!-- Derecha: Instagram Profesional -->
+            <a href="https://instagram.com/psico.con.franki" target="_blank" class="flex items-center gap-2 bg-gradient-to-r from-mauve-50 to-sage-50 hover:from-mauve-100 px-4 py-1.5 rounded-full border border-mauve-200/50 transition-all group shadow-sm">
+                <!-- Logotipo Instagram SVG -->
+                <svg class="w-4 h-4 text-mauve-700 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span class="text-xs font-bold text-mauve-900 tracking-wide">@psico.con.franki</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- MODAL DE ÉXITO PREMIUM PERSONALIZADO (Reemplazo del Alert rústico) -->
+    <div id="successModal" class="hidden fixed inset-0 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-[2.5rem] max-w-md w-full p-8 border border-mauve-100 shadow-2xl text-center transform scale-95 transition-all duration-300 relative">
+            <div class="text-5xl mb-4 animate-bounce">🪻✨🌿</div>
+            <h3 class="serif-title text-2xl font-bold text-mauve-950 mb-2">¡Completado con Éxito!</h3>
+            <p class="text-xs text-stone-600 leading-relaxed mb-6">¡Excelente trabajo, Frank! Se han emparejado y desarmado todas las trampas cognitivas con éxito. El diálogo interno ahora es más claro y amigable.</p>
+            <button onclick="closeSuccessModal()" class="w-full py-3 bg-mauve-700 hover:bg-mauve-600 text-white font-bold rounded-xl text-xs transition-all shadow-md">
+                Continuar Explorando
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE JUEGO E INTERACTIVIDAD BOTÁNICA -->
+    <script>
+        // ==========================================
+        // SINTETIZADOR DE MÚSICA CHILL DE AMBIENTE (Web Audio API)
+        // ==========================================
+        let isSoundEnabled = true;
+        let isAmbientPlaying = false;
+        
+        // Contexto de Audio compartido
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Nodos del sintetizador de ambiente
+        let ambientOscillators = [];
+        let ambientGainNode = null;
+        let noiseFilter = null;
+        let noiseSource = null;
+
+        function playSynthSound(type) {
+            if (!isSoundEnabled) return;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                // Tono de campana de viento suave
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.exponentialRampToValueAtTime(880.00, audioCtx.currentTime + 0.2); // A5
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'wrong') {
+                // Tono suave sordo (sin ser molesto)
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220.00, audioCtx.currentTime); // A3
+                osc.frequency.linearRampToValueAtTime(146.83, audioCtx.currentTime + 0.3); // D3
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.35);
+            } else if (type === 'match') {
+                // Sonido corto brillante
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime); // G5
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            }
+        }
+
+        // CONTROLADOR DE MÚSICA DE FONDO (DISEÑO CHILL CON CUENCOS Y BRISA)
+        function startAmbientMusic() {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            // Ganancia principal para el ambiente (volumen bajo y relajante)
+            ambientGainNode = audioCtx.createGain();
+            ambientGainNode.gain.setValueAtTime(0.07, audioCtx.currentTime);
+            ambientGainNode.connect(audioCtx.destination);
+
+            // 1. Drones Armónicos de Cuencos de Cuarzo (Frecuencias puras pentatónicas de La Mayor)
+            // La2 (110Hz), Do#3 (138.6Hz), Mi3 (164.8Hz), La3 (220Hz)
+            const chords = [110.00, 138.61, 164.81, 220.00];
+            ambientOscillators = chords.map((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const nodeGain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                // LFO (Modulador de volumen lento para recrear el "vaivén" de los cuencos)
+                nodeGain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                
+                osc.connect(nodeGain);
+                nodeGain.connect(ambientGainNode);
+                osc.start();
+
+                // Animación de volumen (respiración)
+                const breatheVolume = () => {
+                    if (!isAmbientPlaying) return;
+                    const duration = 4 + index * 1.5;
+                    nodeGain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + duration/2);
+                    nodeGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                    setTimeout(breatheVolume, duration * 1000);
+                };
+                breatheVolume();
+
+                return osc;
+            });
+
+            // 2. Ruido Rosa de Brisa Marina/Viento en el Jardín
+            const bufferSize = audioCtx.sampleRate * 2; // 2 segundos de buffer de ruido
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+
+            noiseSource = audioCtx.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            noiseSource.loop = true;
+
+            // Filtro de viento suave
+            noiseFilter = audioCtx.createBiquadFilter();
+            noiseFilter.type = 'lowpass';
+            noiseFilter.frequency.setValueAtTime(250, audioCtx.currentTime);
+
+            noiseSource.connect(noiseFilter);
+            noiseFilter.connect(ambientGainNode);
+            noiseSource.start();
+
+            // Animación de barrido del filtro de viento (crea el efecto de olas)
+            const animateWind = () => {
+                if (!isAmbientPlaying) return;
+                const waveTime = 6 + Math.random() * 3;
+                noiseFilter.frequency.exponentialRampToValueAtTime(450, audioCtx.currentTime + waveTime/2);
+                noiseFilter.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + waveTime);
+                setTimeout(animateWind, waveTime * 1000);
+            };
+            animateWind();
+        }
+
+        function stopAmbientMusic() {
+            if (ambientGainNode) {
+                ambientGainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+                setTimeout(() => {
+                    ambientOscillators.forEach(osc => { try { osc.stop(); } catch(e){} });
+                    ambientOscillators = [];
+                    try { noiseSource.stop(); } catch(e){}
+                    noiseSource = null;
+                    ambientGainNode = null;
+                }, 1000);
+            }
+        }
+
+        function toggleAmbientMusic() {
+            isAmbientPlaying = !isAmbientPlaying;
+            const btn = document.getElementById('btnPlayAmbient');
+            const icon = document.getElementById('ambientIcon');
+            const text = document.getElementById('ambientText');
+
+            if (isAmbientPlaying) {
+                startAmbientMusic();
+                btn.className = "px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-emerald-600 shadow-md animate-pulse";
+                icon.textContent = "🌸";
+                text.textContent = "Sonido Chill: Activo";
+            } else {
+                stopAmbientMusic();
+                btn.className = "px-3.5 py-1.5 bg-sage-700 hover:bg-sage-600 text-white rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-sage-600 shadow-md";
+                icon.textContent = "🎵";
+                text.textContent = "Activar Sonido Chill";
+            }
+        }
+
+        function toggleSound() {
+            isSoundEnabled = !isSoundEnabled;
+            document.getElementById('soundText').textContent = isSoundEnabled ? 'Efectos: Sí' : 'Efectos: No';
+            document.getElementById('soundIcon').textContent = isSoundEnabled ? '🔊' : '🔇';
+        }
+
+        // ==========================================
+        // DICCIONARIO DE DEFINICIONES PARA EL HOVER (BOCADILLO)
+        // ==========================================
+        const definitions = {
+            "Filtro Mental (Ignorar lo Positivo)": "Fijar la atención de forma rígida únicamente en un solo error o aspecto negativo de tu día, descartando u olvidando todo lo bueno que ha ocurrido a tu alrededor.",
+            "Lectura de Mente": "Asumir y convencerte por completo de que sabes exactamente lo que las demás personas están pensando de ti o de tus capacidades, sin poseer ninguna prueba real u objetiva.",
+            "Razonamiento Emocional": "Tomar tus estados emocionales como pruebas irrefutables de la realidad externa. 'Como hoy me siento asustado u culpable, significa que hay un peligro real o que hice algo malo'.",
+            "Exigencias Rígidas (Los \'Deberías\')": "Guiar tu comportamiento y el de otros bajo normas internas hiper-exigentes e inflexibles. Castigarse moralmente con culpa obsesiva si hay un desvío.",
+            "Catastrofismo": "Predecir y autoconvencerse de que siempre va a ocurrir el peor desenlace catastrófico posible en el futuro ante cualquier dilema o incertidumbre de la vida.",
+            "Pensamiento de Todo o Nada": "Evaluar la realidad en extremos polares absolutos: blanco o negro, perfecto o fracaso, sin tener la flexibilidad de observar matices, grises o términos medios.",
+            "Minimizar o Descalificar lo Positivo": "Quitarle valor real y sincero a tus esfuerzos, méritos o metas alcanzadas, asumiendo de manera injusta que 'cualquiera lo habría hecho' o 'no fue para tanto'.",
+            "Personalización": "Cargarse y responsabilizarse moralmente de las conductas, frustraciones, silencios o estados de ánimo negativos de otros, creyendo que todo tiene que ver contigo.",
+            "Etiquetado": "Aplicarse a ti mismo un juicio global, destructivo y de una sola palabra negativa (ej. 'soy inútil') basado en un error aislado o transitorio del día a día.",
+            "Conclusión Apresurada (Lectura de Mente)": "Precipitarse a asumir lo que los demás piensan de ti o de una propuesta tuya con un solo mensaje corto, sin molestarse en comprobar la realidad."
+        };
+
+        // ==========================================
+        // BASE DE DATOS DE LA TRIVIA DE DISTORSIONES
+        // ==========================================
+        const questions = [
+            {
+                scenario: '"Hice una cena para mis amigos, todos repitieron plato y dijeron que estaba deliciosa, pero un amigo dejó un poco en el plato. Siento que cociné horrible, que soy un mal anfitrión y que arruiné la junta."',
+                options: [
+                    { text: "Filtro Mental (Ignorar lo Positivo)", correct: true, feedback: "¡Exacto! Te enfocas de lleno en el único micro-detalle irrelevante, borrando del mapa toda la evidencia objetiva de que la junta fue un éxito rotundo." },
+                    { text: "Lectura de Mente", correct: false, feedback: "Aunque crees saber por qué dejó comida, la distorsión base es que borraste el 95% de éxito culinario para centrarte en el 5% sobrante." },
+                    { text: "Razonamiento Emocional", correct: false, feedback: "La emoción negativa no es prueba de mala cocina. La distorsión clave es filtrar selectivamente solo la porción que quedó." }
+                ]
+            },
+            {
+                scenario: '"Decidí quedarme acostado todo el domingo descansando y viendo series. Siento un nudo de culpa en el estómago y una voz que me dice: \'Deberías estar ordenando o haciendo cosas útiles, eres un flojo\'."',
+                options: [
+                    { text: "Lectura de Mente", correct: false, feedback: "Nadie te está juzgando desde afuera; es una regla interna rígida que te impones a ti mismo." },
+                    { text: "Exigencias Rígidas (Los \'Deberías\')", correct: true, feedback: "¡Perfecto! Te impones exigencias tan rígidas en tu tiempo libre que transforman un descanso biológico sano en un castigo moral." },
+                    { text: "Catastrofismo", correct: false, feedback: "No estás prediciendo una catástrofe futura, te estás juzgando bajo una norma implacable de productividad constante." }
+                ]
+            },
+            {
+                scenario: '"Le escribí una propuesta de proyecto o idea a mi jefe. Él me contestó cortamente con un: \'Ok, lo revisamos mañana\'. Siento de inmediato que mi propuesta es pésima y que él está muy molesto conmigo."',
+                options: [
+                    { text: "Conclusión Apresurada (Lectura de Mente)", correct: true, feedback: "¡Excelente! Asumes que conoces perfectamente el estado de ánimo o el humor de la otra persona basándote solo en su estilo de escritura rápida." },
+                    { text: "Personalización", correct: false, feedback: "Aunque crees que su actitud es contra ti, la trampa que te asegura que le molesta tu propuesta es la lectura de mente." },
+                    { text: "Pensamiento de Todo o Nada", correct: false, feedback: "No estás pensando en términos de éxito/fracaso absoluto, sino inventando intenciones negativas en su mensaje." }
+                ]
+            },
+            {
+                scenario: '"Tengo flojera y desgano de hacer ejercicio hoy. Como me siento tan desmotivado e incómodo, me digo: \'Si me siento tan desganado, es porque de verdad no sirvo para el deporte y mejor no lo intento\'."',
+                options: [
+                    { text: "Razonamiento Emocional", correct: true, feedback: "¡Muy bien! Tomas tu emoción transitoria (desgano) como una prueba de tu identidad o capacidades biológicas reales." },
+                    { text: "Minimización", correct: false, feedback: "No estás rebajando un logro previo, estás decretando tus límites basándote únicamente en cómo te sientes hoy." },
+                    { text: "Etiquetado", correct: false, feedback: "Aunque te dices \'no sirvo\', la trampa principal es usar tu emoción del momento para decretar tu realidad real." }
+                ]
+            },
+            {
+                scenario: '"Logré titularme de mi carrera universitaria trabajando y estudiando en paralelo. Cuando mis amigos y colegas me felicitan con orgullo, yo les respondo: \'Ah, pero si no es para tanto, cualquiera lo hace con un poco de empeño\'."',
+                options: [
+                    { text: "Catastrofismo", correct: false, feedback: "No estás prediciendo una catástrofe futura, estás quitando el valor real de tu logro presente." },
+                    { text: "Minimizar o Descalificar lo Positivo", correct: true, feedback: "¡Exacto! Rechazas de lleno tus méritos y el inmenso esfuerzo que pusiste, camuflándolo bajo una falsa modestia que sabotea tu valía." },
+                    { text: "Lectura de Mente", correct: false, feedback: "No estás asumiendo lo que piensan los demás, de hecho, rechazas activamente el reconocimiento que te ofrecen." }
+                ]
+            },
+            {
+                scenario: '"Mi pareja llegó cansada del trabajo, suspirando hondo y sin muchas ganas de conversar. Me digo a mí mismo: \'Seguro hice algo para molestarla, tiene que ver con la discusión que tuvimos ayer\'."',
+                options: [
+                    { text: "Personalización", correct: true, feedback: "¡Excelente acierto! Te atribuyes el origen del estado de ánimo del otro, ignorando por completo explicaciones lógicas como su fatiga laboral." },
+                    { text: "Pensamiento Blanco o Negro", correct: false, feedback: "No estás evaluando tu relación en extremos, estás asumiendo de forma equivocada que su estado de ánimo es tu culpa." },
+                    { text: "Razonamiento Emocional", correct: false, feedback: "No estás decretando tu realidad por cómo te sientes, sino asumiendo culpa de eventos ajenos." }
+                ]
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let score = 0;
+        let answeredQuestions = Array(questions.length).fill(null);
+
+        // Lista de flores diferentes y bellas para las opciones
+        const flowers = ['🌼', '🪻', '🌸'];
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIdx];
+            
+            // Actualizar textos
+            document.getElementById('question-counter').textContent = `Dilema ${currentQuestionIdx + 1} de ${questions.length}`;
+            document.getElementById('scenario-text').textContent = q.scenario;
+            
+            // Calcular porcentaje del progreso
+            const progressVal = Math.round(((currentQuestionIdx + 1) / questions.length) * 100);
+            document.getElementById('progress-percent').textContent = `${progressVal}%`;
+            
+            // Renderizar alternativas
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = "relative group w-full";
+
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-2xl border text-xs font-semibold transition-all flex justify-between items-center bg-stone-50/60 border-stone-200/80 text-stone-700 hover:bg-mauve-50 hover:border-mauve-300 hover:shadow-sm`;
+                
+                const currentFlower = flowers[idx % flowers.length];
+                
+                btn.innerHTML = `
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-lg">${currentFlower}</span>
+                        <span>${opt.text}</span>
+                    </div>
+                    <span class="indicator-icon text-sm"></span>
+                `;
+                btn.onclick = () => selectOption(idx, btn);
+                
+                // Si ya fue respondida esta pregunta, bloquearla y mostrar resultado
+                if (answeredQuestions[currentQuestionIdx] !== null) {
+                    btn.disabled = true;
+                    if (opt.correct) {
+                        btn.className = `w-full text-left p-4 rounded-2xl border text-xs font-semibold bg-emerald-50/90 border-emerald-400 text-emerald-950 flex justify-between items-center shadow-sm`;
+                        btn.querySelector('.indicator-icon').innerHTML = '✅';
+                    } else if (answeredQuestions[currentQuestionIdx] === idx) {
+                        btn.className = `w-full text-left p-4 rounded-2xl border text-xs font-semibold bg-rose-50/90 border-rose-300 text-rose-950 flex justify-between items-center shadow-sm`;
+                        btn.querySelector('.indicator-icon').innerHTML = '❌';
+                    } else {
+                        btn.className = `w-full text-left p-4 rounded-2xl border text-xs font-semibold bg-stone-50/50 border-stone-200 text-stone-400 flex justify-between items-center`;
+                        btn.querySelector('span').classList.add('opacity-40');
+                    }
+                }
+
+                // Generar Tooltip flotante con la definición
+                const tooltipDef = definitions[opt.text.trim()] || "Pensamiento irracional que distorsiona la realidad de forma automática.";
+                const tooltip = document.createElement('div');
+                tooltip.className = "absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2.5 hidden group-hover:block w-72 p-3 bg-stone-900/95 backdrop-blur text-stone-100 text-[11px] font-normal leading-relaxed rounded-xl shadow-xl z-50 pointer-events-none transition-all duration-200 border border-stone-800 text-center";
+                tooltip.innerHTML = `
+                    <span class="font-bold text-mauve-300 block mb-1">🌿 Significado Clínico:</span>
+                    ${tooltipDef}
+                `;
+                
+                wrapper.appendChild(btn);
+                wrapper.appendChild(tooltip);
+                container.appendChild(wrapper);
+            });
+
+            // Actualizar barra de progreso
+            const progress = ((currentQuestionIdx + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            // Control de navegación
+            const btnPrev = document.getElementById('btn-prev');
+            if (currentQuestionIdx === 0) {
+                btnPrev.classList.add('opacity-40', 'cursor-not-allowed');
+                btnPrev.disabled = true;
+            } else {
+                btnPrev.classList.remove('opacity-40', 'cursor-not-allowed');
+                btnPrev.disabled = false;
+            }
+
+            // Mostrar/Ocultar retroalimentación si ya fue respondida
+            const feedbackBox = document.getElementById('feedback-container');
+            if (answeredQuestions[currentQuestionIdx] !== null) {
+                const selectedIdx = answeredQuestions[currentQuestionIdx];
+                showFeedback(selectedIdx);
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+        }
+
+        function selectOption(optionIdx, buttonElement) {
+            if (answeredQuestions[currentQuestionIdx] !== null) return;
+
+            const q = questions[currentQuestionIdx];
+            const isCorrect = q.options[optionIdx].correct;
+            answeredQuestions[currentQuestionIdx] = optionIdx;
+
+            // Bloquear todos los botones
+            const buttons = document.getElementById('options-container').querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (isCorrect) {
+                buttonElement.className = "w-full text-left p-4 rounded-2xl border text-xs font-semibold bg-emerald-50 border-emerald-400 text-emerald-950 flex justify-between items-center pop-animation shadow-sm";
+                buttonElement.querySelector('.indicator-icon').innerHTML = '✅';
+                score += 10;
+                playSynthSound('correct');
+            } else {
+                buttonElement.className = "w-full text-left p-4 rounded-2xl border text-xs font-semibold bg-rose-50 border-rose-300 text-rose-950 flex justify-between items-center shake-animation shadow-sm";
+                buttonElement.querySelector('.indicator-icon').innerHTML = '❌';
+                playSynthSound('wrong');
+
+                // Resaltar la correcta
+                buttons.forEach((btn, idx) => {
+                    if (q.options[idx].correct) {
+                        btn.className = "w-full text-left p-4 rounded-2xl border text-xs font-semibold bg-emerald-50 border-emerald-300 text-emerald-950 flex justify-between items-center shadow-sm";
+                        btn.querySelector('.indicator-icon').innerHTML = '✅';
+                    }
+                });
+            }
+
+            document.getElementById('score-display').textContent = `Aciertos: ${score} / 60 Pts`;
+            showFeedback(optionIdx);
+        }
+
+        function showFeedback(optionIdx) {
+            const q = questions[currentQuestionIdx];
+            const opt = q.options[optionIdx];
+            const feedbackBox = document.getElementById('feedback-container');
+            const feedbackIcon = document.getElementById('feedback-badge');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackDesc = document.getElementById('feedback-desc');
+            const leafBg = document.getElementById('feedback-bg-leaf');
+
+            feedbackBox.classList.remove('hidden');
+            if (opt.correct) {
+                feedbackBox.className = "mt-6 p-5 rounded-3xl border border-emerald-200 bg-emerald-50/40 text-emerald-950 transition-all duration-300 relative overflow-hidden";
+                feedbackIcon.className = "p-2.5 rounded-xl bg-emerald-100 text-emerald-800 text-base shadow-sm";
+                feedbackIcon.textContent = "🛡️";
+                feedbackTitle.textContent = "¡Respuesta Correcta!";
+                leafBg.textContent = "🌿";
+            } else {
+                feedbackBox.className = "mt-6 p-5 rounded-3xl border border-rose-200 bg-rose-50/40 text-rose-950 transition-all duration-300 relative overflow-hidden";
+                feedbackIcon.className = "p-2.5 rounded-xl bg-rose-100 text-rose-800 text-base shadow-sm";
+                feedbackIcon.textContent = "🍁";
+                feedbackTitle.textContent = "Desafiando la Trampa";
+                leafBg.textContent = "🍂";
+            }
+            feedbackDesc.textContent = opt.feedback;
+        }
+
+        function changeQuestion(dir) {
+            currentQuestionIdx += dir;
+            loadQuestion();
+        }
+
+        function nextAction() {
+            if (currentQuestionIdx < questions.length - 1) {
+                currentQuestionIdx++;
+                loadQuestion();
+            } else {
+                // Ir a la etapa de términos pareados
+                document.getElementById('trivia-section').classList.add('hidden');
+                document.getElementById('matching-section').classList.remove('hidden');
+                loadMatchingGame();
+            }
+        }
+
+        // ==========================================
+        // ETAPA 2: JUEGO DE TÉRMINOS PAREADOS (MATCHING)
+        // ==========================================
+        const matchingData = [
+            { id: 1, concept: "Lectura de Mente", example: '"No me saludó efusivamente, de seguro le caigo pésimo y piensa que soy una molestia."' },
+            { id: 2, concept: "Catastrofismo", example: '"Si no me contesta en una hora, significa que le pasó algo terrible y chocó."' },
+            { id: 3, concept: "Pensamiento Todo o Nada", example: '"Como hoy rompí mi dieta con un chocolate, ya arruiné todo, no sirvo para esto."' },
+            { id: 4, concept: "Los 'Deberías'", example: '"Debo ser siempre fuerte y nunca llorar ni mostrar debilidad para que me valoren."' }
+        ];
+
+        let selectedConcept = null;
+        let selectedExample = null;
+        let matchedPairs = 0;
+
+        function loadMatchingGame() {
+            const conceptsGrid = document.getElementById('concepts-grid');
+            const examplesGrid = document.getElementById('examples-grid');
+
+            conceptsGrid.innerHTML = '';
+            examplesGrid.innerHTML = '';
+
+            // Mezclar elementos para el juego
+            const shuffledConcepts = [...matchingData].sort(() => Math.random() - 0.5);
+            const shuffledExamples = [...matchingData].sort(() => Math.random() - 0.5);
+
+            shuffledConcepts.forEach(item => {
+                const btn = document.createElement('button');
+                btn.id = `concept-${item.id}`;
+                btn.className = "w-full p-4 rounded-2xl border border-mauve-200 bg-mauve-50/80 text-mauve-950 text-xs font-bold transition-all text-left shadow-sm hover:bg-mauve-100/50 flex items-center justify-between group";
+                btn.innerHTML = `<span>${item.concept}</span> <span class="text-mauve-300 group-hover:translate-x-1 transition-transform">&rarr;</span>`;
+                btn.onclick = () => selectConceptCard(item.id, btn);
+                conceptsGrid.appendChild(btn);
+            });
+
+            shuffledExamples.forEach(item => {
+                const btn = document.createElement('button');
+                btn.id = `example-${item.id}`;
+                // Letra en formato regular, muy clara y legible (sin cursivas inclinadas que cansen la vista)
+                btn.className = "w-full p-4 rounded-2xl border border-sage-200 bg-sage-50/70 text-stone-800 text-xs font-medium transition-all text-left shadow-sm hover:bg-sage-100/50 flex items-center justify-between group";
+                btn.innerHTML = `<span>${item.example}</span> <span class="text-sage-300 group-hover:-translate-x-1 transition-transform">&larr;</span>`;
+                btn.onclick = () => selectExampleCard(item.id, btn);
+                examplesGrid.appendChild(btn);
+            });
+        }
+
+        function selectConceptCard(id, element) {
+            if (element.classList.contains('bg-emerald-50')) return;
+
+            // Remover bordes activos previos
+            document.querySelectorAll('[id^="concept-"]').forEach(btn => {
+                if (!btn.classList.contains('bg-emerald-50')) {
+                    btn.className = "w-full p-4 rounded-2xl border border-mauve-200 bg-mauve-50/80 text-mauve-950 text-xs font-bold transition-all text-left shadow-sm hover:bg-mauve-100/50 flex items-center justify-between group";
+                    btn.innerHTML = `<span>${btn.querySelector('span').textContent}</span> <span class="text-mauve-300 group-hover:translate-x-1 transition-transform">&rarr;</span>`;
+                }
+            });
+
+            selectedConcept = { id, element };
+            element.className = "w-full p-4 rounded-2xl border-2 border-mauve-600 bg-mauve-100 text-mauve-950 text-xs font-extrabold transition-all text-left shadow-md scale-[1.01] flex items-center justify-between";
+            element.innerHTML = `<span>${element.querySelector('span').textContent}</span> <span class="text-mauve-600 font-bold">💜</span>`;
+
+            checkMatch();
+        }
+
+        function selectExampleCard(id, element) {
+            if (element.classList.contains('bg-emerald-50')) return;
+
+            // Remover bordes activos previos
+            document.querySelectorAll('[id^="example-"]').forEach(btn => {
+                if (!btn.classList.contains('bg-emerald-50')) {
+                    btn.className = "w-full p-4 rounded-2xl border border-sage-200 bg-sage-50/70 text-stone-800 text-xs font-medium transition-all text-left shadow-sm hover:bg-sage-100/50 flex items-center justify-between group";
+                    btn.innerHTML = `<span>${btn.querySelector('span').textContent}</span> <span class="text-sage-300 group-hover:-translate-x-1 transition-transform">&larr;</span>`;
+                }
+            });
+
+            selectedExample = { id, element };
+            element.className = "w-full p-4 rounded-2xl border-2 border-sage-500 bg-sage-100 text-stone-900 text-xs font-extrabold transition-all text-left shadow-md scale-[1.01] flex items-center justify-between";
+            element.innerHTML = `<span>${element.querySelector('span').textContent}</span> <span class="text-sage-600 font-bold">🌿</span>`;
+
+            checkMatch();
+        }
+
+        function checkMatch() {
+            if (selectedConcept && selectedExample) {
+                if (selectedConcept.id === selectedExample.id) {
+                    playSynthSound('match');
+                    
+                    selectedConcept.element.className = "w-full p-4 rounded-2xl border border-emerald-400 bg-emerald-50 text-emerald-950 text-xs font-bold transition-all text-left flex justify-between items-center pop-animation shadow-sm";
+                    selectedConcept.element.innerHTML = `<span>${selectedConcept.element.querySelector('span').textContent}</span> <span class="text-emerald-600">🌿 Acierto</span>`;
+                    
+                    selectedExample.element.className = "w-full p-4 rounded-2xl border border-emerald-400 bg-emerald-50 text-emerald-900 text-xs font-medium transition-all text-left flex justify-between items-center pop-animation shadow-sm";
+                    selectedExample.element.innerHTML = `<span>${selectedExample.element.querySelector('span').textContent}</span> <span class="text-emerald-600">🌿 Acierto</span>`;
+
+                    selectedConcept = null;
+                    selectedExample = null;
+                    matchedPairs++;
+
+                    if (matchedPairs === matchingData.length) {
+                        setTimeout(() => {
+                            playSynthSound('correct');
+                            // Mostrar Modal de éxito interactivo (Reemplaza al alert convencional)
+                            showSuccessModal();
+                        }, 500);
+                    }
+                } else {
+                    playSynthSound('wrong');
+                    selectedConcept.element.classList.add('shake-animation');
+                    selectedExample.element.classList.add('shake-animation');
+
+                    const tempConcept = selectedConcept;
+                    const tempExample = selectedExample;
+
+                    setTimeout(() => {
+                        tempConcept.element.classList.remove('shake-animation');
+                        tempExample.element.classList.remove('shake-animation');
+                        
+                        tempConcept.element.className = "w-full p-4 rounded-2xl border border-mauve-200 bg-mauve-50/80 text-mauve-950 text-xs font-bold transition-all text-left shadow-sm hover:bg-mauve-100/50 flex items-center justify-between group";
+                        tempConcept.element.innerHTML = `<span>${tempConcept.element.querySelector('span').textContent}</span> <span class="text-mauve-300 group-hover:translate-x-1 transition-transform">&rarr;</span>`;
+                        
+                        tempExample.element.className = "w-full p-4 rounded-2xl border border-sage-200 bg-sage-50/70 text-stone-800 text-xs font-medium transition-all text-left shadow-sm hover:bg-sage-100/50 flex items-center justify-between group";
+                        tempExample.element.innerHTML = `<span>${tempExample.element.querySelector('span').textContent}</span> <span class="text-sage-300 group-hover:-translate-x-1 transition-transform">&larr;</span>`;
+                    }, 400);
+
+                    selectedConcept = null;
+                    selectedExample = null;
+                }
+            }
+        }
+
+        // FUNCIONES DEL MODAL DE ÉXITO PERSONALIZADO
+        function showSuccessModal() {
+            document.getElementById('successModal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            restartAll();
+        }
+
+        function restartAll() {
+            currentQuestionIdx = 0;
+            score = 0;
+            matchedPairs = 0;
+            answeredQuestions = Array(questions.length).fill(null);
+            document.getElementById('score-display').textContent = `Aciertos: 0 / 60 Pts`;
+            
+            document.getElementById('matching-section').classList.add('hidden');
+            document.getElementById('trivia-section').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        window.onload = function() {
+            loadQuestion();
+        }
+    </script>
+</body>
+</html>
